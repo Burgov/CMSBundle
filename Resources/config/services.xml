@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <!--
+    <parameters>
+        <parameter key="burgov_cms.example.class">Burgov\Bundle\CMSBundle\Example</parameter>
+    </parameters>
+
+    <services>
+        <service id="burgov_cms.example" class="%burgov_cms.example.class%">
+            <argument type="service" id="service_id" />
+            <argument>plain_value</argument>
+            <argument>%parameter_name%</argument>
+        </service>
+    </services>
+    -->
+
+    <services>
+        <service id="burgov_cms.twig_extension" class="Burgov\Bundle\CMSBundle\Twig\CMSExtension">
+            <tag name="twig.extension"/>
+        </service>
+        <service id="burgov_cms.form.image_selector" class="Burgov\Bundle\CMSBundle\Form\Type\ImageSelectorType">
+            <argument type="service" id="doctrine_phpcr.odm.default_document_manager"/>
+            <argument>%symfony_cmf_create.image.model_class%</argument>
+            <tag name="form.type" alias="burgov_image_selector"/>
+        </service>
+
+
+        <service id="liip_imagine.data.loader.phpcr" class="Liip\ImagineBundle\Imagine\Data\Loader\DoctrinePHPCRLoader">
+            <tag name="liip_imagine.data.loader" loader="phpcr" />
+            <argument type="service" id="liip_imagine" />
+            <argument type="service" id="doctrine_phpcr.odm.default_document_manager" />
+            <argument>%symfony_cmf_create.image.model_class%</argument>
+        </service>
+
+        <service id="burgov_cms.release_excluder" class="Burgov\Bundle\CMSBundle\PrepareRelease\Excluder">
+            <tag name="samson_release.prepare_release_excluder"/>
+        </service>
+    </services>
+</container>

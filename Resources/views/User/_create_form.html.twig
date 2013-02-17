@@ -1,0 +1,6 @@
+{% extends "BurgovCMSBundle:User:_form.html.twig" %}
+
+{% block _user_username_widget %}
+{{ form_widget(form) }}
+{{ form_widget(form.parent.mail_password) }} {{ form_label(form.parent.mail_password, null, { label_attr: { style: 'display: inline-block;' } }) }}
+{% endblock %}

@@ -1,0 +1,28 @@
+<script type="text/html" id="image-list">
+<table class="image-selector">
+    <tbody>
+        <!-- ko foreach: images -->
+        <tr data-bind="click: function() { $parent.selectImage($data); }">
+            <td data-bind="text: alt"></td>
+            <td><div class="image" data-bind="style: { backgroundImage: 'url('+url+')' }"></div></td>
+            <!--<td><button data-bind="click: $parent.remove, clickBubble: false">remove image</button></td>-->
+        </tr>
+        <!-- /ko -->
+    </tbody>
+    <tbody data-bind="ifnot: isUploading">
+        <tr data-bind="if: errorMessage"><td colspan="3" data-bind="text: errorMessage"></td></tr>
+        <tr>
+            <td><input name='caption' type="text"></td>
+            <td><input name='file' type="file"></td>
+            <td><button data-bind="click: upload">Upload</button></td>
+        </tr>
+    </tbody>
+    <tbody data-bind="if: isUploading">
+        <tr>
+            <td colspan="3">
+                <div id="progress-bar" style="height: 1em; width: 100%;"></div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</script>

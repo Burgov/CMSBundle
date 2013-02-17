@@ -1,0 +1,36 @@
+{% block _user_groups_widget %}
+{% for child in form %}
+<div>{{ form_widget(child) }} {{ form_label(child) }}</div>
+{% else %}
+<div>Er zijn nog geen gebruikersgroepen aangemaakt. <a href="{{ path("usergroups") }}">Gebruikersgroepen beheren</a></div>
+{% endfor %}
+{% endblock %}
+
+{% block user_widget %}
+{{ form_errors(form) }}
+<fieldset>
+    <legend>Gebruikersgegevens</legend>
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.groups) }}
+</fieldset>
+
+<fieldset>
+    <legend>Persoonsgegevens</legend>
+    <table cellspacing="0" cellpadding="0" class="name">
+        <tr>
+            <td>{{ form_row(form.firstName) }}</td>
+            <td>{{ form_row(form.preposition) }}</td>
+            <td>{{ form_row(form.lastName) }}</td>
+        </tr>
+    </table>
+</fieldset>
+
+<style type="text/css">
+form table.name label {
+    display: block;
+}
+</style>
+
+{{ form_rest(form) }}
+{% endblock %}

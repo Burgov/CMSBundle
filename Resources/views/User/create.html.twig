@@ -1,0 +1,18 @@
+{% extends '::admin.html.twig' %}
+
+{% block title %}Gebruiker aanmaken{% endblock %}
+
+{% form_theme form "BurgovCMSBundle:User:_create_form.html.twig" %}
+
+{% block body %}
+<form method="POST">
+    {{ form_widget(form) }}
+    <input type="submit" value="opslaan">
+</form>
+{% endblock %}
+
+{% block right %}
+<ul>
+    <li><a href="{{ path('users') }}">Terug naar het overzicht</a></li>
+</ul>
+{% endblock %}

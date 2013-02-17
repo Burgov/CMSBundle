@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content=" minimum-scale=1.0, maximum-scale=1.0, width=device-width; user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Burgov CMS || {% block title %}{% endblock %}</title>
+
+    {% block includes %}
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        {% stylesheets "bundles/burgovcms/css/style.scss" filter="scssphp,cssrewrite" %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+        {% endstylesheets %}
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/start/jquery-ui.css" type="text/css">
+        <script type="text/javascript" src="{{ asset("/js_lib/knockout-2.2.1.js") }}"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+    {% endblock %}
+</head>
+<body>
+  <header>
+    <div id="logout"><a href="{{ path('fos_user_security_logout') }}">Uitloggen</a></div>
+    <h1><img src="{{ asset("bundles/burgovcms/images/logo.png") }}" alt="Burgov Webdevelopment"></h1>
+    <div id="banner">
+      <div>
+          <table cellspacing="0" cellpadding="0">
+              <tr><td class="menu">{% if is_granted("IS_AUTHENTICATED_FULLY") %}{% include "BurgovCMSBundle:Menu:menu.html.twig" %}{% endif %}</td></tr>
+              {% if app.session.flashbag|length %}<tr><td class="feedback">
+                  {% for flashMessage in app.session.flashbag.get('notice') %}
+                      <div class="flash flash-notice">
+                          {{ flashMessage|raw }}
+                      </div>
+                  {% endfor %}
+              </td></tr>{% endif %}
+          </table>
+      </div>
+    </div>
+  </header>
+  {% set blockright = block('right') %}
+  <div id="main" {% if blockright|length %}class="hasRight"{% endif %}>
+    {% if blockright|length %}
+    <div id="right">
+      {{ blockright|raw }}
+    </div>
+    {% endif %}
+    <div id="content">
+      <h1>{{ block('title') }}</h1>
+      <h2>{% block subtitle '' %}</h2>
+      {% block body '' %}
+    </div>
+  </div>
+  <footer>
+      &copy; Burgov Webdevelopment 2013
+  </footer>
+
+  <script type="text/javascript">
+    var cmf_image = {{ {
+        list: path('symfony_cmf_create_image_list'),
+        upload: path('symfony_cmf_create_image_upload'),
+        detail: path('symfony_cmf_create_image_detail', { name: '%name%' }),
+        delete: path('symfony_cmf_create_image_delete', { name: '%name%' })
+    }|json_encode|raw }};
+  </script>
+  {% include "BurgovCMSBundle:ImageUpload:image_upload.html.twig" %}
+
+  {{ tinymce_init() }}
+  {% javascripts "bundles/burgovcms/js/*.js" %}
+  <script type="text/javascript" src="{{ asset_url }}"></script>
+  {% endjavascripts %}
+</body>
+</html>

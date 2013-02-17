@@ -1,0 +1,218 @@
+@import "compass";
+$green: #008000;
+$text-color: #595e63;
+$line-color: #c1c4c7;
+$text-size: 11px;
+
+@mixin plain-ul($display: block) {
+    margin: 0;
+    padding: 0;
+    
+    li {
+        margin: 0;
+        padding: 0;
+        display: $display;
+    }
+}
+@mixin center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 810px;
+    clear: both;
+}
+body {
+    margin: 0;
+    padding: 0;
+    border-top: 6px solid $green;
+    font: $text-size Arial;
+    color: lighten($text-color, 20%);
+}
+a {
+    text-decoration: none;
+}
+header {
+    img {
+        display: block;
+    }
+    h1 {
+        @include center;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+    #banner {
+        border: 1px solid $line-color;
+        border-width: 1px 0;
+        background-color: #f1f0f0;
+        img { display: block; }
+        padding: 5px 0;
+        
+        table {
+            height: 100%;
+            width: 100%;
+            .menu {
+                vertical-align: top;
+            }
+            .feedback {
+                vertical-align: bottom;
+                .flash {
+                    margin: 0 5px 5px 5px;
+                    @include border-radius(5px);
+                    color: white;
+                    padding: 5px 5px 5px 25px;
+                    font-weight: bold;
+                }
+                .flash-notice {
+                    border: 1px solid lime;
+                    background: #00cc00 url(/bundles/burgovcms/images/icons/ok.png) no-repeat 5px 4px;
+                }
+                .flash-error {
+                    border: 1px solid red;
+                    background: #cc0000 url(/bundles/burgovcms/images/icons/no.png) no-repeat 5px 4px;
+                }
+            }
+        }
+        
+        > div {
+            @include center;
+            height: 132px;
+            background-image: url(/bundles/burgovcms/images/banner.png);
+            
+            ul {
+                margin: 0;
+                padding: 0;
+                
+                li {
+                    display: inline-block;
+                    padding: 5px;
+                    background-color: rgba(255, 255, 255, .9);
+                    border: 2px solid black;
+                    @include border-radius(4px);
+                    margin: 5px 0 0 5px;
+                    
+                    &:hover {
+                        background-color: white;
+                    }
+                }
+            }
+        }
+    }
+}
+#main {
+    @include center;
+    margin-bottom: 30px;
+    position: relative;
+    height: auto;
+    
+    &.hasRight {
+        #content {
+            margin-right: 270px;
+        }
+    }
+    
+    #right {
+        position: absolute;
+        right: 0;
+        width: 230px;
+        border-left: 1px dotted black;
+        height: 100%;
+        padding-top: 30px;
+        padding-left: 20px;
+        
+        ul {
+            padding-left: 1em;
+        }
+    }
+    
+    #content {
+        table.list {
+            th {
+                background-color: $text-color;
+                color: white;
+                text-align: left;
+                vertical-align: top;
+                padding: 3px;
+            }
+            tbody {
+                tr {
+                    td {
+                        border-bottom: 1px dashed #ddd;
+                    }
+                    &:hover td {
+                        background-color: #eee;
+                    }
+                }
+            }
+        }
+        
+        form {
+            fieldset {
+                margin-bottom: 1em;
+                
+                legend {
+                    font-size: 1.4em;
+                    border: 1px solid black;
+                    color: black;
+                    @include border-radius(4px 4px 0 0);
+                    border-bottom: 0;
+                    padding: 5px;
+                }
+            }
+            
+            & > div > div, & > fieldset > div {
+                margin-bottom: 1em;
+                
+                & > label {
+                    display: block;
+                    font-weight: bold;
+                }
+            }
+            
+            ul {
+                color: red;
+                margin: 0;
+                padding: 0 0 0 2em;
+            }
+        }
+        
+        p.warning {
+            margin: 0 5px 5px 5px;
+            @include border-radius(5px);
+            color: white;
+            padding: 5px 5px 5px 25px;
+            font-weight: bold;
+            border: 1px solid red;
+            background: #cc0000 url(/bundles/burgovcms/images/icons/no.png) no-repeat 5px 4px;
+        }
+    }
+    
+    a {
+        color: #00cc00;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    
+}
+footer {
+    @include center;
+    text-align: right;
+    a {
+        color: #fd9836;
+    }
+}
+
+.image-selector {
+    tr {
+        &:hover {
+            td {
+                background-color: #ccc;
+            }
+        }
+    }
+    
+    .image {
+        width: 240px;
+        height: 180px;
+        background-size: cover;
+    }
+}

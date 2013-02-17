@@ -1,0 +1,37 @@
+{% extends '::admin.html.twig' %}
+
+{% block title %}Gebruikers{% endblock %}
+{% block subtitle %}{{ users|length }} resultaten{% endblock %}
+
+{% block body %}
+
+<table class="list">
+
+    <thead>
+        <tr>
+            <th></th>
+            <th>Gebruikersnaam</th>
+            <th>E-mailadres</th>
+            <th>Groepen</th>
+            <th>Naam</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td><a href="{{ path('user_edit', { id: user.id }) }}"><img src="{{ asset("/bundles/burgovcms/images/icons/edit.png") }}"></a></td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.groups|join(", ")|default("-") }}</td>
+            <td>{{ user.name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+{% endblock %}
+
+{% block right %}
+<ul><li><a href="{{ path("user_create") }}">Nieuwe gebruiker</a></li></ul>
+{% endblock %}

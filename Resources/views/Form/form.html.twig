@@ -1,0 +1,23 @@
+{% block burgov_image_selector_widget %}
+<div class="image-selector" data-image-selector id="image-selector-{{ id }}">
+    {{ form_widget(form, { "attr": { "data-bind": "attr: { value: image() ? image().id : null }" } }) }}
+    <!-- ko if: image() !== null --><div class="image" data-bind="style: { backgroundImage: 'url('+image().url+')' }"></div><!-- /ko -->
+    <a href="#">Select image</a>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    var $el = $("#image-selector-{{ id }}");
+    $el.data('image', new ImageViewModel(null));
+    ko.applyBindings($el.data('image'), $el.get(0));
+    {% if data %}
+        image = new Asset({{ { id: data.id, url: path('symfony_cmf_create_image_display', { name: image_name }), alt: data.caption }|json_encode|raw }});
+        $el.data('image').setImage(image);
+    {% endif %}
+});
+</script>
+{% endblock %}
+
+{% block burgov_image_selector_row %}
+{{ block('form_row') }}
+{% endblock %}

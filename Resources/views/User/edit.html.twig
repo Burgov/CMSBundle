@@ -1,0 +1,21 @@
+{% extends '::admin.html.twig' %}
+
+{% block title %}Gebruiker bewerken{% endblock %}
+{% block subtitle %}{{ user.username }}{% endblock %}
+
+{% form_theme form "BurgovCMSBundle:User:_form.html.twig" %}
+
+{% block body %}
+<form method="POST">
+    {{ form_widget(form) }}
+    <input type="submit" value="opslaan">
+</form>
+{% endblock %}
+
+{% block right %}
+<ul>
+    <li style="margin-bottom: 1em;"><a href="{{ path('users') }}">Terug naar het overzicht</a></li>
+    <li><a href="{{ path('user_password_regenerate', { id: user.id }) }}">Genereer nieuw wachtwoord</a></li>
+    <li><a href="{{ path('user_password_email', { id: user.id }) }}">Genereer en verstuur nieuw wachtwoord</a></li>
+</ul>
+{% endblock %}

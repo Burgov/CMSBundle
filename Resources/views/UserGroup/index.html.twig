@@ -1,0 +1,34 @@
+{% extends '::admin.html.twig' %}
+
+{% block title %}Gebruikersgroepen{% endblock %}
+{% block subtitle %}{{ groups|length }} resultaten{% endblock %}
+
+{% block body %}
+<table class="list">
+
+    <thead>
+        <tr>
+            <th></th>
+            <th>Naam</th>
+            <th>Aantal gebruikers</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for group in groups %}
+        <tr>
+            <td><a href="{{ path('usergroup_edit', { id: group.id }) }}"><img src="{{ asset("/bundles/burgovcms/images/icons/edit.png") }}"></a></td>
+            <td>{{ group.name }}</td>
+            <td>{{ group.users|length }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+{% endblock %}
+
+{% block right %}
+<ul>
+    <li><a href="{{ path("usergroup_create") }}">Nieuwe gebruikersgroep</a></li>
+</ul>
+{% endblock %}

@@ -1,0 +1,46 @@
+admin:
+  pattern: /admin
+  defaults: { _controller: BurgovCMSBundle:Admin:index }
+
+usergroups:
+  pattern: /admin/usergroups
+  defaults: { _controller: BurgovCMSBundle:UserGroup:index }
+usergroup_create:
+  pattern: /admin/usergroup/create
+  defaults: { _controller: BurgovCMSBundle:UserGroup:create }
+usergroup_edit:
+  pattern: /admin/usergroup/{id}/edit
+  defaults: { _controller: BurgovCMSBundle:UserGroup:edit }
+
+users:
+  pattern: /admin/users
+  defaults: { _controller: BurgovCMSBundle:User:index }
+user_create:
+  pattern: /admin/user/create
+  defaults: { _controller: BurgovCMSBundle:User:create }
+user_edit:
+  pattern: /admin/user/{id}/edit
+  defaults: { _controller: BurgovCMSBundle:User:edit }
+user_password_regenerate:
+  pattern: /admin/user/{id}/regenerate_password
+  defaults: { _controller: BurgovCMSBundle:User:regeneratePassword }
+user_password_email:
+  pattern: /admin/user/{id}/mail_password
+  defaults: { _controller: BurgovCMSBundle:User:regeneratePassword, send_mail: true }
+
+
+symfony_cmf_create_image_detail:
+  pattern: /symfony-cmf/create/image-details/{name}
+  defaults:
+    _controller: symfony_cmf_create.image.controller:detailAction
+    _format: json
+  requirements:
+    _method: GET
+
+symfony_cmf_create_image_delete:
+  pattern: /symfony-cmf/create/image-delete/{name}
+  defaults:
+    _controller: symfony_cmf_create.image.controller:deleteAction
+    _format: json
+  requirements:
+    _method: POST
