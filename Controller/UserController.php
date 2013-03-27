@@ -69,15 +69,14 @@ class UserController extends Controller
         if ($this->getRequest()->isMethod('POST')) {
             $form->bind($this->getRequest());
             if ($form->isValid()) {
-                $user->setPlainPassword($this->generatePassword(8));
-
+                $user->setPlainPassword($password = $this->generatePassword(8));
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($user);
                 $em->flush();
 
-                $this->getRequest()->getSession()->getFlashBag()->add('notice', 'Gebruiker opgeslagen. Het wachtwoord is: "<em>'.$user->getPlainPassword().'</em>"');
+                $this->getRequest()->getSession()->getFlashBag()->add('notice', 'Gebruiker opgeslagen. Het wachtwoord is: "<em>'.$password.'</em>"');
                 if ($form->get('mail_password')->getData()) {
-                    $this->sendPassword($user);
+                    $this->sendPassword($user, $password);
                 }
 
                 return $this->redirect($this->generateUrl('user_edit', array('id' => $user->getId())));
@@ -95,20 +94,20 @@ class UserController extends Controller
         $this->getRequest()->getSession()->getFlashBag()->add('notice', 'Het nieuwe wahtwoord van deze gebruiker is: "<em>'.$password.'</em>"');
 
         if ($send_mail) {
-            $this->sendPassword($user);
+            $this->sendPassword($user, $password);
         }
 
         return $this->redirect($this->generateUrl('user_edit', array('id' => $user->getId())));
     }
 
-    private function sendPassword(User $user)
+    private function sendPassword(User $user, $password)
     {
         $message = \Swift_Message::newInstance('Uw wachtwoord voor de Louis Hartlooper Prijs website', <<<END
 Beste {$user->getName()},
 
 Hierbij ontvangt u uw wachtwoord om mee in te loggen op de website van de Louis Hartlooper Prijs:
 
-{$user->getPlainPassword()}
+{$password}
 
 Met vriendelijke groet,
 END

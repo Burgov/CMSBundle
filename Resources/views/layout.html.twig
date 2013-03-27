@@ -28,7 +28,7 @@
       <div>
           <table cellspacing="0" cellpadding="0">
               <tr><td class="menu">{% if is_granted("IS_AUTHENTICATED_FULLY") %}{% include "BurgovCMSBundle:Menu:menu.html.twig" %}{% endif %}</td></tr>
-              {% if app.session.flashbag|length %}<tr><td class="feedback">
+              {% if app.session.flashbag.has('notice') %}<tr><td class="feedback">
                   {% for flashMessage in app.session.flashbag.get('notice') %}
                       <div class="flash flash-notice">
                           {{ flashMessage|raw }}
