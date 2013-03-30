@@ -31,6 +31,8 @@ class UserType extends AbstractType
         $builder->add('firstName', null, array('label' => 'Voornaam'));
         $builder->add('preposition', null, array('label' => 'Tussenvoegsel', 'attr' => array('size' => 10)));
         $builder->add('lastName', null, array('label' => 'Achternaam'));
+        
+        $builder->add('enabled', null, array('label' => 'Ingeschakeld'));
     }
 
 }
