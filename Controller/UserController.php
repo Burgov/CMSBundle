@@ -37,12 +37,14 @@ class UserController extends Controller
      */
     public function editAction(User $user)
     {
+        /* @var $userManager \FOS\UserBundle\Doctrine\UserManager */
+        $userManager = $this->get('fos_user.user_manager');
         $form = $this->createForm(new UserType(), $user);
 
         if ($this->getRequest()->isMethod('POST')) {
             $form->bind($this->getRequest());
             if ($form->isValid()) {
-                $this->getDoctrine()->getEntityManager()->flush();
+                $userManager->updateUser($user);
                 $this->getRequest()->getSession()->getFlashBag()->add('notice', 'Gebruiker opgeslagen');
 
                 return $this->redirect($this->generateUrl('user_edit', array('id' => $user->getId())));
@@ -57,7 +59,10 @@ class UserController extends Controller
      */
     public function createAction()
     {
-        $user = new User('');
+        /* @var $userManager \FOS\UserBundle\Doctrine\UserManager */
+        $userManager = $this->get('fos_user.user_manager');
+
+        $user = $userManager->createUser();
         $form = $this->createForm(new UserType(), $user);
 
         $form->add($this->get('form.factory')->createNamed('mail_password', 'checkbox', false, array(
@@ -70,10 +75,8 @@ class UserController extends Controller
             $form->bind($this->getRequest());
             if ($form->isValid()) {
                 $user->setPlainPassword($password = $this->generatePassword(8));
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($user);
-                $em->flush();
-
+                $userManager->updateUser($user);
+                
                 $this->getRequest()->getSession()->getFlashBag()->add('notice', 'Gebruiker opgeslagen. Het wachtwoord is: "<em>'.$password.'</em>"');
                 if ($form->get('mail_password')->getData()) {
                     $this->sendPassword($user, $password);
@@ -90,7 +93,10 @@ class UserController extends Controller
     {
         $password = $this->generatePassword(8);
         $user->setPlainPassword($password);
-        $this->getDoctrine()->getEntityManager()->flush();
+        /* @var $userManager \FOS\UserBundle\Doctrine\UserManager */
+        $userManager = $this->get('fos_user.user_manager');
+        $userManager->updateUser($user);
+        
         $this->getRequest()->getSession()->getFlashBag()->add('notice', 'Het nieuwe wahtwoord van deze gebruiker is: "<em>'.$password.'</em>"');
 
         if ($send_mail) {
