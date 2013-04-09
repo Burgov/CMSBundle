@@ -15,8 +15,9 @@ $(document).on('click', '[data-image-selector] a', function(e) {
     });
 });
 
-var ImagesViewModel = function(data, handlerCallback) {
+var ImagesViewModel = function(data, handlerCallback, filter) {
     this.images = ko.observableArray([]);
+    this.filter = filter || null;
     for (i in data.assets) {
         var image = new Asset(data.assets[i]);
         this.images.push(image);
@@ -104,8 +105,9 @@ var tinymce_button_burgov_image_selector = function(ed) {
     $.get(cmf_image.list, function(data) {
         ko.applyBindings(new ImagesViewModel(data, function(image) {
             $dialog.dialog('close').dialog('destroy').remove();
-            ed.focus();console.log(image);
-            ed.selection.setContent('<img style="float: left; margin: 0 1em 1em 0" src="'+image.url+'" alt="'+image.alt+'" title="'+image.alt+'">');
-        }), $dialog.get(0)); 
+            ed.focus();
+            var filenameParts = image.id.split('/');
+            ed.selection.setContent('<img style="float: left; margin: 0 1em 1em 0" src="/media/cache/article_image/cms/content/static/'+filenameParts[filenameParts.length-1]+'" alt="'+image.alt+'" title="'+image.alt+'">');
+        }, 'article_image'), $dialog.get(0)); 
     });
 };
