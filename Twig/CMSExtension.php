@@ -30,14 +30,14 @@ class CMSExtension extends \Twig_Extension
 
     public function readmore($html, $linkTarget)
     {
-        $parts = preg_split('#<p>.*?<!-- pagebreak -->.*?</p>#', $html);
+        $parts = preg_split('#<p.*?><span.*?>(\s|&nbsp;)*\.{3}(\s|&nbsp;)*</span></p>#', $html);
 
         return $parts[0].'<p class="readmore"><a href="'.$linkTarget.'">Lees meer...</a></p>';
     }
 
     public function article($html)
     {
-        return preg_replace('#<p>.*?<!-- pagebreak -->.*?</p>#', '', $html);
+        return preg_replace('#<p.*?><span.*?>(\s|&nbsp;)*\.{3}(\s|&nbsp;)*</span></p>#', '', $html);
 
     }
 }
