@@ -32,6 +32,8 @@
         <service id="liip_imagine.data.loader.phpcr" class="Liip\ImagineBundle\Imagine\Data\Loader\DoctrinePHPCRLoader">
             <tag name="liip_imagine.data.loader" loader="phpcr" />
             <argument type="service" id="liip_imagine" />
+            <argument type="collection" />
+            <argument />
             <argument type="service" id="doctrine_phpcr.odm.default_document_manager" />
             <argument>%symfony_cmf_create.image.model_class%</argument>
         </service>
