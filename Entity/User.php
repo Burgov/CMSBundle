@@ -10,8 +10,10 @@
 
 namespace Burgov\Bundle\CMSBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\GroupInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -54,6 +56,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
+        $this->groups = new ArrayCollection();
         $this->setEnabled(true);
         // your own logic
     }
@@ -101,5 +104,11 @@ class User extends BaseUser
     public function __toString()
     {
         return $this->getUsername();
+    }
+
+    public function setEmail($email)
+    {
+        parent::setEmail($email);
+        $this->setUsername($email);
     }
 }
