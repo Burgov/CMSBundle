@@ -31,6 +31,11 @@ class UserGroup extends BaseUserGroup
      */
     protected $users;
 
+    /**
+     * @ORM\Column(type="string", length=6)
+     */
+    protected $uniqueCode;
+
     public function getUsers()
     {
         return $this->users;
@@ -41,4 +46,13 @@ class UserGroup extends BaseUserGroup
         return $this->getName();
     }
 
+    public function setUniqueCode($uniqueCode)
+    {
+        $this->uniqueCode = $uniqueCode;
+    }
+
+    public function getUniqueCode()
+    {
+        return $this->uniqueCode;
+    }
 }
