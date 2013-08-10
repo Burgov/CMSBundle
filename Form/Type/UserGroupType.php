@@ -25,6 +25,7 @@ class UserGroupType extends AbstractType
     public function buildForm(\Symfony\Component\Form\FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', null, array('label' => 'Naam'));
+        $builder->add('uniqueCode');
     }
 
 }

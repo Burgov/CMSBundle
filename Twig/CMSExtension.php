@@ -36,11 +36,11 @@ class CMSExtension extends \Twig_Extension
         );
     }
 
-    public function readmore($html, $linkTarget)
+    public function readmore($html, $linkTarget, $linkIfNoReadMore = true)
     {
         $parts = preg_split('#<p.*?><span.*?>(\s|&nbsp;)*\.{3}(\s|&nbsp;)*</span></p>#', $html);
 
-        return $this->filterNonPublicContent($parts[0]).'<p class="readmore"><a href="'.$linkTarget.'">Lees meer...</a></p>';
+        return $this->filterNonPublicContent($parts[0].($linkIfNoReadMore || count($parts) > 1 ? '<p class="readmore"><a href="'.$linkTarget.'">Lees meer...</a></p>' : ''));
     }
 
     public function article($html)

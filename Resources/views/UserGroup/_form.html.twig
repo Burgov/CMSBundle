@@ -1,3 +1,38 @@
 {% block user_group_widget %}
 {{ form_widget(form) }}
 {% endblock %}
+
+{% block _user_group_uniqueCode_widget %}
+    {{ form_widget(form) }}
+    <input type="button" value="Generate" id="generate">
+    <div>Registration link: <span id="link">{% if value %}{{ url('fos_user_registration_register', { groupCode: value }) }}{% else %}No code generated yet{% endif %}</span></div>
+    <div style="color: red" id="warning"></div>
+    <script>
+        var chars = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        var generateCode = function(length) {
+            var code = '';
+            while(code.length < length) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+        $("#generate").click(function() {
+            $("#{{ id }}").val(generateCode(6)).trigger('change');
+        });
+
+        var originalText = $("#link").text();
+        var originalValue = {{ value|json_encode|raw }};
+        $("#{{ id }}").change(function() {
+            $('#warning').text('');
+            if ($(this).val() != originalValue) {
+                text = 'Save the page to generate a new URL';
+                if (originalValue.length) {
+                    $('#warning').text('Changing this value will make old registration links invalid!');
+                }
+            } else {
+                text = originalText;
+            }
+            $("#link").text(text);
+        })
+    </script>
+{% endblock %}
