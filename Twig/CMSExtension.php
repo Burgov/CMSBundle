@@ -9,12 +9,20 @@
  */
 
 namespace Burgov\Bundle\CMSBundle\Twig;
+use Symfony\Component\Security\Core\SecurityContext;
 
 /**
  * @author Bart van den Burg <bart@burgov.nl>
  */
 class CMSExtension extends \Twig_Extension
 {
+    private $sc;
+
+    public function __construct(SecurityContext $sc)
+    {
+        $this->sc = $sc;
+    }
+
     public function getName()
     {
         return 'cms';
@@ -32,12 +40,19 @@ class CMSExtension extends \Twig_Extension
     {
         $parts = preg_split('#<p.*?><span.*?>(\s|&nbsp;)*\.{3}(\s|&nbsp;)*</span></p>#', $html);
 
-        return $parts[0].'<p class="readmore"><a href="'.$linkTarget.'">Lees meer...</a></p>';
+        return $this->filterNonPublicContent($parts[0]).'<p class="readmore"><a href="'.$linkTarget.'">Lees meer...</a></p>';
     }
 
     public function article($html)
     {
-        return preg_replace('#<p.*?><span.*?>(\s|&nbsp;)*\.{3}(\s|&nbsp;)*</span></p>#', '', $html);
+        return $this->filterNonPublicContent(preg_replace('#<p.*?><span.*?>(\s|&nbsp;)*\.{3}(\s|&nbsp;)*</span></p>#', '', $html));
+    }
 
+    private function filterNonPublicContent($text) {
+        if  ($this->sc->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return preg_replace('#\[user\](.*?)\[/user\]#s', '$1', $text);
+        }
+
+        return preg_replace('#\[user\].*?\[/user\]#s', '', $text);
     }
 }

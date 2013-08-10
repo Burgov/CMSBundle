@@ -20,6 +20,7 @@
 
     <services>
         <service id="burgov_cms.twig_extension" class="Burgov\Bundle\CMSBundle\Twig\CMSExtension">
+            <argument type="service" id="security.context"/>
             <tag name="twig.extension"/>
         </service>
         <service id="burgov_cms.form.image_selector" class="Burgov\Bundle\CMSBundle\Form\Type\ImageSelectorType">
