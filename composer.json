@@ -19,11 +19,11 @@
         "leafo/scssphp-compass": "dev-master",
         "symfony-cmf/symfony-cmf": "1.0.*",
         "symfony-cmf/simple-cms-bundle": "1.0.*",
-        "symfony-cmf/block-bundle": "dev-master",
-        "friendsofsymfony/user-bundle": "dev-master",
-        "symfony-cmf/create-bundle": "dev-master",
-        "jackalope/jackalope-doctrine-dbal": "dev-master",
-        "doctrine/phpcr-odm": "dev-master"
+        "symfony-cmf/block-bundle": "*",
+        "friendsofsymfony/user-bundle": "*",
+        "symfony-cmf/create-bundle": "*",
+        "jackalope/jackalope-doctrine-dbal": "*",
+        "doctrine/phpcr-odm": "*"
     },
     "autoload": {
         "psr-0": { "Burgov\\Bundle\\CMSBundle": "" }
